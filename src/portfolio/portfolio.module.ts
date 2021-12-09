@@ -8,6 +8,6 @@ import { PortfolioSchema } from './schemas/portfolio.schema';
     MongooseModule.forFeature([{ name: 'Portfolio', schema: PortfolioSchema }]),
   ],
   controllers: [PortfolioController],
-  providers: [PortfolioService, PortfolioService],
+  providers: [PortfolioService],
 })
 export class PortfolioModule {}
