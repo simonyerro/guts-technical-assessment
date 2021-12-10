@@ -7,8 +7,10 @@ import { ConfigModule } from '@nestjs/config';
   imports: [
     ConfigModule.forRoot(),
     PortfolioModule,
-    MongooseModule.forRoot('mongodb://127.0.0.1:27017/crypto-portfolio', {}),
-    // MongooseModule.forRoot('mongodb://mongodb:27017/crypto-portfolio', {}),
+    MongooseModule.forRoot(
+      `mongodb://${process.env.MONGOOSE_HOST}:27017/crypto-portfolio`,
+      {},
+    ),
   ],
   controllers: [],
   providers: [],
