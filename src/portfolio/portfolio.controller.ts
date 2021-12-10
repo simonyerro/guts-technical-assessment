@@ -19,7 +19,7 @@ import { CreatePortfolioDTO } from './dto/create-portfolio.dto';
 export class PortfolioController {
   constructor(private portfolioService: PortfolioService) {}
 
-  // add a portfolio
+  /** Add a portfolio */
   @Post('/create')
   async addPortfolio(@Body() createPortfolioDTO: CreatePortfolioDTO) {
     const portfolio = await this.portfolioService.addPortfolio(
@@ -31,14 +31,14 @@ export class PortfolioController {
     };
   }
 
-  // Retrieve portfolios list
+  /** Retrieve portfolios list */
   @Get('portfolios')
   async getAllPortfolio(@Res() res) {
     const portfolios = await this.portfolioService.getAllPortfolio();
     return res.status(HttpStatus.OK).json(portfolios);
   }
 
-  // Fetch a particular portfolio using ID
+  /** Fetch a particular portfolio using ID */
   @Get('portfolio/:portfolioID')
   async getPortfolio(@Res() res, @Param('portfolioID') portfolioID) {
     const portfolio = await this.portfolioService.getPortfolio(portfolioID);
@@ -46,6 +46,7 @@ export class PortfolioController {
     return res.status(HttpStatus.OK).json(portfolio);
   }
 
+  /** Compute value of a particular portfolio using Coinmarketcap API */
   @Get('value/:portfolioID')
   async getPortfolioValue(
     @Param('portfolioID') portfolioID,
@@ -62,6 +63,7 @@ export class PortfolioController {
     return compute_value;
   }
 
+  /** Update existing portfolio */
   @Put('/update')
   async updatePortfolio(
     @Query('portfolioID') portfolioID,
@@ -78,7 +80,7 @@ export class PortfolioController {
     };
   }
 
-  // Delete a portfolio
+  /** Delete a portfolio */
   @Delete('/delete')
   async deletePortfolio(@Res() res, @Query('portfolioID') portfolioID) {
     const portfolio = await this.portfolioService.deletePortfolio(portfolioID);

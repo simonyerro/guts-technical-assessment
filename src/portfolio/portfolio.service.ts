@@ -9,14 +9,14 @@ const cmc_api_key = process.env.COINMARKETCAP_API_KEY;
 
 @Injectable()
 export class PortfolioService implements OnModuleInit {
-  private client = new CoinMarketCap(cmc_api_key);
+  private client;
 
   constructor(
     @InjectModel('Portfolio') private readonly portfolioModel: Model<Portfolio>,
   ) {}
 
   onModuleInit() {
-    this.client = new CoinMarketCap(process.env.COINMARKETCAP_API_KEY);
+    this.client = new CoinMarketCap(cmc_api_key);
   }
 
   /** Fetch all portfolios */

@@ -14,10 +14,11 @@ services:
       - mongodb
     volumes:
       - .:/usr/src/app
-      - /usr/src/app/node_modules
+      # - /usr/src/app/node_modules
     restart: unless-stopped
     environment:
       - MONGOOSE_HOST=mongodb
+      - COINMARKETCAP_API_KEY
 
   mongodb:
     image : mongo:latest
