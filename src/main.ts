@@ -7,14 +7,16 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
   const config = new DocumentBuilder()
-    .setTitle('Portfolio API')
-    .setDescription('Documentation about the portfolio API')
+    .setTitle('Cats example')
+    .setDescription('The cats API description')
     .setVersion('1.0')
+    .addTag('cats')
     .build();
   const document = SwaggerModule.createDocument(app, config, {
+    ignoreGlobalPrefix: true,
     include: [PortfolioModule],
   });
-  SwaggerModule.setup('doc', app, document);
+  SwaggerModule.setup('api', app, document);
 
   await app.listen(3000);
 }

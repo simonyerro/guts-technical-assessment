@@ -10,6 +10,14 @@ API used to compute the value of given token using [Nest](https://github.com/nes
 $ npm install
 ```
 
+### Environment variables
+
+You'll need to provide some environment variables:
+```bash
+# .env
+COINMARKETCAP_API_KEY='xxx-xxx-xxx-xxx-xxx'
+```
+
 ## Running the app locally
 
 You'll need to deploy a mongo db locally
@@ -40,7 +48,7 @@ $ npm run test:cov
 
 ## Deploy
 
-```
+```bash
 # development
 docker compose up dev
 ```

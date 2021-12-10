@@ -1,6 +1,6 @@
-import * as mongoose from 'mongoose';
+import { Schema } from 'mongoose';
 
-const TokenSchema = new mongoose.Schema({
+const TokenSchema = new Schema({
   slug: {
     type: String,
     required: true,
@@ -15,7 +15,7 @@ const TokenSchema = new mongoose.Schema({
   },
 });
 
-export const PortfolioSchema = new mongoose.Schema({
+export const PortfolioSchema = new Schema({
   invested: {
     quantity: {
       type: Number,

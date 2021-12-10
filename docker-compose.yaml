@@ -16,6 +16,9 @@ services:
       - .:/usr/src/app
       - /usr/src/app/node_modules
     restart: unless-stopped
+    environment:
+      - MONGOOSE_HOST=mongodb
+
   mongodb:
     image : mongo:latest
     container_name: crypto_mongodb

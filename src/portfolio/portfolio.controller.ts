@@ -10,6 +10,7 @@ import {
   NotFoundException,
   Delete,
   Param,
+  InternalServerErrorException,
 } from '@nestjs/common';
 import { PortfolioService } from './portfolio.service';
 import { CreatePortfolioDTO } from './dto/create-portfolio.dto';
@@ -20,17 +21,14 @@ export class PortfolioController {
 
   // add a portfolio
   @Post('/create')
-  async addPortfolio(
-    @Res() res,
-    @Body() createPortfolioDTO: CreatePortfolioDTO,
-  ) {
+  async addPortfolio(@Body() createPortfolioDTO: CreatePortfolioDTO) {
     const portfolio = await this.portfolioService.addPortfolio(
       createPortfolioDTO,
     );
-    return res.status(HttpStatus.OK).json({
+    return {
       message: 'Portfolio has been created successfully',
       portfolio,
-    });
+    };
   }
 
   // Retrieve portfolios list
@@ -48,9 +46,24 @@ export class PortfolioController {
     return res.status(HttpStatus.OK).json(portfolio);
   }
 
+  @Get('value/:portfolioID')
+  async getPortfolioValue(
+    @Param('portfolioID') portfolioID,
+    @Param('currency') currency,
+  ) {
+    const compute_value = await this.portfolioService.getPortfolioValue(
+      portfolioID,
+      currency,
+    );
+    if (!compute_value)
+      throw new InternalServerErrorException(
+        'Computing portfolio value went wrong!',
+      );
+    return compute_value;
+  }
+
   @Put('/update')
   async updatePortfolio(
-    @Res() res,
     @Query('portfolioID') portfolioID,
     @Body() createPortfolioDTO: CreatePortfolioDTO,
   ) {
@@ -59,10 +72,10 @@ export class PortfolioController {
       createPortfolioDTO,
     );
     if (!portfolio) throw new NotFoundException('Portfolio does not exist!');
-    return res.status(HttpStatus.OK).json({
+    return {
       message: 'Portfolio has been successfully updated',
       portfolio,
-    });
+    };
   }
 
   // Delete a portfolio
@@ -70,9 +83,9 @@ export class PortfolioController {
   async deletePortfolio(@Res() res, @Query('portfolioID') portfolioID) {
     const portfolio = await this.portfolioService.deletePortfolio(portfolioID);
     if (!portfolio) throw new NotFoundException('Portfolio does not exist');
-    return res.status(HttpStatus.OK).json({
+    return {
       message: 'Portfolio has been deleted',
       portfolio,
-    });
+    };
   }
 }
