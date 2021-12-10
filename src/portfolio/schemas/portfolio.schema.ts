@@ -5,6 +5,10 @@ const TokenSchema = new Schema({
     type: String,
     required: true,
   },
+  symbol: {
+    type: String,
+    required: true,
+  },
   quantity: {
     type: Number,
     required: true,

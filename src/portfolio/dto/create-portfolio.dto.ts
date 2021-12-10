@@ -2,6 +2,7 @@ import { ValidateNested } from 'class-validator';
 
 export class tokenDTO {
   slug: string;
+  symbol: string;
   quantity: number;
   where: string;
 }

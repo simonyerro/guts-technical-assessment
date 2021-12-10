@@ -49,7 +49,7 @@ export class PortfolioController {
   @Get('value/:portfolioID')
   async getPortfolioValue(
     @Param('portfolioID') portfolioID,
-    @Param('currency') currency,
+    @Query('currency') currency,
   ) {
     const compute_value = await this.portfolioService.getPortfolioValue(
       portfolioID,
