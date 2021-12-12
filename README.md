@@ -48,7 +48,27 @@ $ npm run test:cov
 
 ## Deploy
 
+### Docker compose
 ```bash
 # development
 docker compose up dev
+```
+
+### Helm
+
+```bash
+# Add the repo containing the Mongodb chart
+helm repo add bitnami https://charts.bitnami.com/bitnami
+
+# Create secret to pull to my private registry
+kubectl create secret docker-registry regcred --docker-server=ghcr.io/simonyerro --docker-username=simonyerro --docker-password=$GITHUB_TOKEN
+
+# If using minikube, you need to run commands to enable ingress
+minikube addons enable ingress
+minikube addons enable ingress-dns
+
+# Install charts
+helm install mongodb bitnami/mongodb -f helm/mongodb/values.yaml
+helm install portfolio ./helm/portfolio_backend
+
 ```

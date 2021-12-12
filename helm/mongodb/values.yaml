@@ -1,0 +1,8 @@
+auth:
+  usernames:
+    - portfolio
+  databases:
+    - portfolio
+
+replicaSet:
+  enabled: true
