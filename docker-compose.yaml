@@ -30,6 +30,9 @@ services:
     networks:
       - backend-network
     restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: root #for test purpose only
 networks:
     backend-network:
       driver: bridge

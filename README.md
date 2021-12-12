@@ -60,15 +60,25 @@ docker compose up dev
 # Add the repo containing the Mongodb chart
 helm repo add bitnami https://charts.bitnami.com/bitnami
 
+# Deploy your ingress-controller
+helm upgrade --install ingress-nginx ingress-nginx \
+  --repo https://kubernetes.github.io/ingress-nginx \
+  --namespace ingress-nginx --create-namespace
+
 # Create secret to pull to my private registry
+# Not necessary as I normally put my repository to public
 kubectl create secret docker-registry regcred --docker-server=ghcr.io/simonyerro --docker-username=simonyerro --docker-password=$GITHUB_TOKEN
 
-# If using minikube, you need to run commands to enable ingress
-minikube addons enable ingress
-minikube addons enable ingress-dns
+# Create secret to store the coinmarketcap API
+# The API will still work without except for /portfolio/value endpoint
+kubectl create secret generic coinmarketcap-api-key --from-literal=coinmarketcap_api_key=$COINMARKETCAP_API_KEY
 
 # Install charts
-helm install mongodb bitnami/mongodb -f helm/mongodb/values.yaml
 helm install portfolio ./helm/portfolio_backend
+
+# Since I'm running everything locally, I need to modify manually the /etc/hosts file to add the ingress host
+# You need to append the following line to /etc/hosts
+127.0.0.1 portfolio.guts
+
 
 ```

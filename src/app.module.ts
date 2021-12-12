@@ -10,7 +10,7 @@ import { ConfigModule } from '@nestjs/config';
     PortfolioModule,
     MongooseModule.forRoot(
       // `mongodb://${process.env.MONGOOSE_HOST}:27017/crypto-portfolio`,
-      `mongodb://root:${process.env.MONGODB_ROOT_PASSWORD}@mongodb.default.svc.cluster.local:27017/portfolio?authSource=admin`,
+      `mongodb://root:${process.env.MONGODB_ROOT_PASSWORD}@${process.env.MONGODB_SVC_NAME}.default.svc.cluster.local:27017/portfolio?authSource=admin`,
     ),
   ],
   controllers: [AppController],

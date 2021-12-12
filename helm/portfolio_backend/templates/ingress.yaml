@@ -23,11 +23,6 @@ metadata:
     {{- toYaml . | nindent 4 }}
   {{- end }}
 spec:
-  defaultBackend:
-    service:
-      name: portfolio
-      port:
-        number: 80
   ingressClassName: {{ .Values.ingress.className }}
   {{- if .Values.ingress.tls }}
   tls:
@@ -54,4 +49,8 @@ spec:
                   number: 80
           {{- end }}
     {{- end }}
+status:
+  loadBalancer:
+    ingress:
+    - hostname: localhost
 {{- end }}

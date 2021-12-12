@@ -8,7 +8,7 @@ image:
   repository: ghcr.io/simonyerro/crypto
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: 1.1.9
+  tag: 1.1.10
 
 imagePullSecrets:
   - name: regcred
@@ -38,18 +38,17 @@ securityContext: {}
   # runAsUser: 1000
 
 service:
-  type: ClusterIP
+  type: NodePort
   port: 80
 
 ingress:
   enabled: true
-  className: ""
+  className: "nginx"
   annotations:
-    kubernetes.io/ingress.class: nginx
-    kubernetes.io/tls-acme: "true"
-    nginx.ingress.kubernetes.io/rewrite-target: /$1
+    # kubernetes.io/tls-acme: "true"
+    # nginx.ingress.kubernetes.io/rewrite-target: /$1
   hosts:
-    - host: portfolio.testtest
+    - host: portfolio.guts
       paths:
         - path: /
           pathType: ImplementationSpecific
@@ -83,6 +82,17 @@ tolerations: []
 
 affinity: {}
 
+coinmarketcap_api_key: coinmarketcap-api-key
+
 mongo:
   root_password: mongodb
   secretName: mongodb-additional-values
+
+mongodb:
+  auth:
+    usernames:
+      - portfolio
+    databases:
+      - portfolio
+  replicaSet:
+    enabled: true
