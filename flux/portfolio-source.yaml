@@ -5,7 +5,7 @@ metadata:
   name: portfolio
   namespace: flux-system
 spec:
-  interval: 30s
+  interval: 1m0s
   ref:
     branch: main
   url: https://github.com/simonyerro/guts-technical-assessment
