@@ -16,9 +16,7 @@ import { LokiLoggerModule } from 'nestjs-loki-logger';
       lokiUrl: 'http://portfolio-loki.default.svc.cluster.local:3100',
       labels: {
         label: 'portfolio_backend',
-      },
-      logToConsole: false,
-      gzip: false,
+      }
     }),
   ],
   controllers: [AppController],
