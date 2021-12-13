@@ -5,6 +5,7 @@
 API used to compute the value of given token using [Nest](https://github.com/nestjs/nest) and [MongoDB](https://github.com/mongodb/mongo)
 
 Other tools used:
+
 * [Loki](https://github.com/grafana/helm-charts/tree/main/charts/loki) for application logging
 * [Prometheus](https://github.com/bitnami/charts/tree/master/bitnami/kube-prometheus) for the cluster monitoring
 * [Grafana](https://github.com/bitnami/charts/tree/master/bitnami/grafana) for the visualization
@@ -36,17 +37,11 @@ helm upgrade --install ingress-nginx ingress-nginx \
   --repo https://kubernetes.github.io/ingress-nginx \
   --namespace ingress-nginx --create-namespace
 
-# Create secret to pull to my private registry
-# Not necessary as I normally put my repository to public
-kubectl create secret docker-registry regcred --docker-server=ghcr.io/simonyerro --docker-username=simonyerro --docker-password=$GITHUB_TOKEN
-
 # Create secret to store the coinmarketcap API
-# The API will still work without except for /portfolio/value endpoint
+# /!\ The API will still work without except for /portfolio/value endpoint
 kubectl create secret generic coinmarketcap-api-key --from-literal=coinmarketcap_api_key=$COINMARKETCAP_API_KEY
 
 # Update and download the dependencies
-helm repo update
-helm dependency update ./helm/portfolio_backend
 helm dependency build ./helm/portfolio_backend
 
 # Install charts
