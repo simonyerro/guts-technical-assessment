@@ -14,10 +14,12 @@ import {
 } from '@nestjs/common';
 import { PortfolioService } from './portfolio.service';
 import { CreatePortfolioDTO } from './dto/create-portfolio.dto';
+import { LokiLogger } from 'nestjs-loki-logger';
 
 @Controller('portfolio')
 export class PortfolioController {
   constructor(private portfolioService: PortfolioService) {}
+  private readonly lokiLogger = new LokiLogger(PortfolioController.name);
 
   /** Add a portfolio */
   @Post('/create')
@@ -25,8 +27,13 @@ export class PortfolioController {
     const portfolio = await this.portfolioService.addPortfolio(
       createPortfolioDTO,
     );
+    const msg = 'Portfolio has been created successfully';
+    this.lokiLogger.debug(
+      'Portfolio has been created successfully',
+      `${HttpStatus.OK}`,
+    );
     return {
-      message: 'Portfolio has been created successfully',
+      message: msg,
       portfolio,
     };
   }
@@ -35,6 +42,7 @@ export class PortfolioController {
   @Get('portfolios')
   async getAllPortfolio(@Res() res) {
     const portfolios = await this.portfolioService.getAllPortfolio();
+    this.lokiLogger.debug(`portfolios retrieved ${HttpStatus.OK}`);
     return res.status(HttpStatus.OK).json(portfolios);
   }
 
@@ -42,7 +50,15 @@ export class PortfolioController {
   @Get('portfolio/:portfolioID')
   async getPortfolio(@Res() res, @Param('portfolioID') portfolioID) {
     const portfolio = await this.portfolioService.getPortfolio(portfolioID);
-    if (!portfolio) throw new NotFoundException('Portfolio does not exist!');
+    if (!portfolio) {
+      const msg = `Portfolio ${portfolioID} not found`;
+      this.lokiLogger.error(msg, `${HttpStatus.NOT_FOUND}`);
+      throw new NotFoundException(msg);
+    }
+    this.lokiLogger.debug(
+      `portfolio ${portfolioID} retrieved`,
+      `${HttpStatus.OK}`,
+    );
     return res.status(HttpStatus.OK).json(portfolio);
   }
 
@@ -56,10 +72,19 @@ export class PortfolioController {
       portfolioID,
       currency,
     );
-    if (!compute_value)
+    if (!compute_value) {
+      this.lokiLogger.error(
+        `Portfolio does not exist`,
+        `${HttpStatus.INTERNAL_SERVER_ERROR}`,
+      );
+      this.lokiLogger.debug(
+        `portfolio ${portfolioID} value computed`,
+        `${HttpStatus.OK}`,
+      );
       throw new InternalServerErrorException(
         'Computing portfolio value went wrong!',
       );
+    }
     return compute_value;
   }
 
@@ -73,9 +98,15 @@ export class PortfolioController {
       portfolioID,
       createPortfolioDTO,
     );
-    if (!portfolio) throw new NotFoundException('Portfolio does not exist!');
+    if (!portfolio) {
+      const msg = `Portfolio ${portfolioID} not found`;
+      this.lokiLogger.error(msg, `${HttpStatus.NOT_FOUND}`);
+      throw new NotFoundException(msg);
+    }
+    const msg = `portfolio ${portfolioID} has been updated`;
+    this.lokiLogger.debug(msg, `${HttpStatus.OK}`);
     return {
-      message: 'Portfolio has been successfully updated',
+      message: msg,
       portfolio,
     };
   }
@@ -84,9 +115,15 @@ export class PortfolioController {
   @Delete('/delete')
   async deletePortfolio(@Res() res, @Query('portfolioID') portfolioID) {
     const portfolio = await this.portfolioService.deletePortfolio(portfolioID);
-    if (!portfolio) throw new NotFoundException('Portfolio does not exist');
+    if (!portfolio) {
+      const msg = `Portfolio ${portfolioID} not found`;
+      this.lokiLogger.error(msg, `${HttpStatus.NOT_FOUND}`);
+      throw new NotFoundException(msg);
+    }
+    const msg = `portfolio ${portfolioID} deleted`;
+    this.lokiLogger.debug(msg, `${HttpStatus.OK}`);
     return {
-      message: 'Portfolio has been deleted',
+      message: msg,
       portfolio,
     };
   }

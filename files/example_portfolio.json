@@ -1,0 +1,44 @@
+{
+    "invested": {
+        "quantity": 12345,
+        "currency": "EUR"
+    },
+    "data":[
+        {
+            "symbol": "ETH",
+            "slug": "ethereum",    
+            "quantity": 4.5,
+            "where": "Metamask"
+        },
+        {
+            "symbol": "AVAX",
+            "slug": "avalanche",    
+            "quantity": 321,
+            "where": "Binance"
+        },
+        {
+            "symbol": "ADA",
+            "slug": "cardano",    
+            "quantity": 123.5423,
+            "where": "Yoroi"
+        },
+        {
+            "symbol": "SOL",
+            "slug": "solana",    
+            "quantity": 20.31234,
+            "where": "Phantom"
+        },
+        {
+            "symbol": "ALEPH",
+            "slug": "aleph-im",    
+            "quantity": 31234.81608,
+            "where": "Phantom"
+        },
+        {
+            "symbol": "FLUX",
+            "slug": "zel",    
+            "quantity": 1243.123456,
+            "where": "Zelcore"
+        }
+    ]
+}
