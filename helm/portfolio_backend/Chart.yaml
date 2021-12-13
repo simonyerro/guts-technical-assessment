@@ -27,3 +27,9 @@ dependencies:
 - name: mongodb
   version: "10.30.6"
   repository: "https://charts.bitnami.com/bitnami"
+- name: kube-prometheus
+  version: "6.5.0"
+  repository: "https://charts.bitnami.com/bitnami"
+- name: grafana
+  version: "7.2.11"
+  repository: "https://charts.bitnami.com/bitnami"

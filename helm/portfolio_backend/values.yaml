@@ -38,20 +38,21 @@ securityContext: {}
   # runAsUser: 1000
 
 service:
-  type: NodePort
+  type: ClusterIP
   port: 80
 
 ingress:
   enabled: true
   className: "nginx"
-  annotations:
-    # kubernetes.io/tls-acme: "true"
-    # nginx.ingress.kubernetes.io/rewrite-target: /$1
+  annotations: {}
   hosts:
     - host: portfolio.guts
       paths:
         - path: /
           pathType: ImplementationSpecific
+          service:
+            name: portfolio
+            port: 80
   tls: []
   #  - secretName: chart-example-tls
   #    hosts:
@@ -96,3 +97,21 @@ mongodb:
       - portfolio
   replicaSet:
     enabled: true
+
+grafana:
+  metrics:
+    enabled: true
+    metrics.serviceMonitor.namespace: default
+
+  ingress:
+    enabled: true
+    hostname: grafana.guts
+    ingressClassName: "nginx"
+
+  datasources:
+    datasources.yaml:
+      apiVersion: 1
+      datasources:
+      - name: Prometheus
+        type: prometheus
+        url: http://prometheus-kube-prometheus-prometheus.default.svc.cluster.local

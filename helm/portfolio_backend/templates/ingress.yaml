@@ -44,9 +44,9 @@ spec:
             pathType: {{ .pathType }}
             backend:
               service:
-                name: portfolio
+                name: {{ .service.name }}
                 port:
-                  number: 80
+                  number: {{ .service.port }}
           {{- end }}
     {{- end }}
 status:
