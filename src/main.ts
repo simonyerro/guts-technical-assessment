@@ -1,14 +1,10 @@
 import { NestFactory } from '@nestjs/core';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { AppModule } from './app.module';
-import { AppController } from './app.controler';
 import { PortfolioModule } from './portfolio/portfolio.module';
-import { LokiLogger } from 'nestjs-loki-logger';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule, {
-    logger: new LokiLogger(AppController.name),
-  });
+  const app = await NestFactory.create(AppModule);
 
   const config = new DocumentBuilder()
     .setTitle('Portfolio backend api documentation')

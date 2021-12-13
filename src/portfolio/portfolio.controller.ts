@@ -77,14 +77,15 @@ export class PortfolioController {
         `Portfolio does not exist`,
         `${HttpStatus.INTERNAL_SERVER_ERROR}`,
       );
-      this.lokiLogger.debug(
-        `portfolio ${portfolioID} value computed`,
-        `${HttpStatus.OK}`,
-      );
+
       throw new InternalServerErrorException(
         'Computing portfolio value went wrong!',
       );
     }
+    this.lokiLogger.debug(
+      `portfolio ${portfolioID} value computed`,
+      `${HttpStatus.OK}`,
+    );
     return compute_value;
   }
 
