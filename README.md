@@ -4,13 +4,13 @@
 
 API used to compute the value of given token using [Nest](https://github.com/nestjs/nest) and [MongoDB](https://github.com/mongodb/mongo)
 
-## Installation
+Other tools used:
+* [Loki](https://github.com/grafana/helm-charts/tree/main/charts/loki) for application logging
+* [Prometheus](https://github.com/bitnami/charts/tree/master/bitnami/kube-prometheus) for the cluster monitoring
+* [Grafana](https://github.com/bitnami/charts/tree/master/bitnami/grafana) for the visualization
+* [Swagger](https://docs.nestjs.com/openapi/introduction) for the API documentation
 
-```bash
-npm install
-```
-
-### Environment variables
+## Environment variables
 
 You'll need to provide some environment variables:
 
@@ -80,7 +80,7 @@ curl -X DELETE "http://portfolio.guts/portfolio/delete?portfolioID={_id}"
 ## Grafana
 
 ```bash
-# Get you're grafana IDs
+# Get your grafana IDs
 echo "User: admin"
 echo "Password: $(kubectl get secret portfolio-grafana-admin --namespace default -o jsonpath="{.data.GF_SECURITY_ADMIN_PASSWORD}" | base64 --decode)"
 ```
@@ -89,8 +89,9 @@ You can access the Grafana at: <http://grafana.guts/>
 
 You can add prometheus and loki as a datasource in <http://grafana.guts/datasources/new>
 
-You only need to fill the URL which will be as follow: http://{service}.{namespace}.svc.cluster.local:{port}
-so: 
+You only need to fill the URL which will be as follow: <http://{service}.{namespace}.svc.cluster.local:{port>}
+so:
+
 * <http://portfolio-kube-prometheus-prometheus.default.svc.cluster.local:9090> for prometheus
 * <http://portfolio-loki.default.svc.cluster.local:3100>
 

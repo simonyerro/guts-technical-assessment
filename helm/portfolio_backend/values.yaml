@@ -8,7 +8,7 @@ image:
   repository: ghcr.io/simonyerro/crypto
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: 1.1.12
+  tag: latest
 
 imagePullSecrets:
   - name: regcred
