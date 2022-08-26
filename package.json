@@ -30,7 +30,7 @@
     "class-validator": "^0.13.2",
     "coingecko-api": "^1.0.10",
     "coinmarketcap-api": "^3.1.1",
-    "mongoose": "^6.1.0",
+    "mongoose": "^6.4.6",
     "nestjs-loki-logger": "^0.0.5",
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.2",
